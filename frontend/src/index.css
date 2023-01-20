@@ -38,5 +38,30 @@ code {
   text-align: center;
 }
 
+.note-important {
+  margin-left: 1.5%;
+  color: white;
+  background-color: #455b55;
+  border-radius: 5px;
+  border:none;
+  cursor: pointer;
+}
+
+.note-important:hover {
+  background-color: #306844;
+}
+
+.not-important {
+  margin-left: 1.5%;
+  border-radius: 5px;
+  background-color: #ECA869;
+  border: none;
+  cursor: pointer;
+}
+
+.not-important:hover {
+  background-color: #FF8B13;
+}
+
 .importance-button {
 }

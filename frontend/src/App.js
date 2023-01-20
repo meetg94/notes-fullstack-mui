@@ -5,11 +5,14 @@ import axios from 'axios'
 import Note from './Components/Note';
 import NotesCard from './Components/NotesCard';
 
+
+
 function App() {
 
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [flag, setFlag] = useState(true)
 
   useEffect(() => {
     axios
@@ -25,6 +28,7 @@ function App() {
       content: newNote,
       important: Math.random() < 0.5,
     }
+  
   axios
     .post('http://localhost:3001/notes', noteObject)
     .then(response => {
@@ -38,6 +42,16 @@ function App() {
   const handleNoteChange = (e) => {
     console.log(e.target.value)
     setNewNote(e.target.value)
+  }
+
+  const toggleImportance = (id) => {
+    const url = `http://localhost:3001/notes/${id}`
+    const note = notes.find(n => n.id === id)
+    const changedNote = { ...note, important: !note.important}
+
+    axios.put(url, changedNote).then(response => {
+      setNotes(notes.map(n => n.id !== id ? n : response.data))
+    })
   }
 
   const notesToShow = showAll
@@ -66,6 +80,8 @@ function App() {
           <Note
             key={note.id}
             note={note}
+            showAll={showAll}
+            toggleImportance={() => toggleImportance(note.id)}
             />
           )}
       </ul>

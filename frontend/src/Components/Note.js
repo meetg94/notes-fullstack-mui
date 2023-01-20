@@ -1,14 +1,14 @@
-import { Card, CardActions, CardContent, Button, Typography } from "@mui/material"
+function Note({ showAll, note, toggleImportance }) {
 
-function Note({ note, toggleImportance }) {
 
   const label = note.important
     ? 'Important' : 'Not Important'
   return (
-    <li>
+    <li className='list-text'>
       {note.content}
       <button 
-      className="importance-button"
+      color="primary"
+      className={note.important ? "note-important" : "not-important"}
       variant="contained"
       onClick={toggleImportance}>
         {label}
