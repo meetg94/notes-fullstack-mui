@@ -10,7 +10,7 @@
       "id": 2,
       "content": "Browser can execute only JavaScript",
       "date": "2022-1-17T18:39:34.091Z",
-      "important": true
+      "important": false
     },
     {
       "id": 3,
@@ -19,14 +19,19 @@
       "important": true
     },
     {
-      "content": "This is my new note.",
+      "content": "All notes are working.",
       "important": true,
       "id": 4
     },
     {
-      "content": "Design is good for now.",
-      "important": false,
+      "content": "New note",
+      "important": true,
       "id": 5
+    },
+    {
+      "content": "This is a good note.",
+      "important": true,
+      "id": 6
     }
   ]
 }
