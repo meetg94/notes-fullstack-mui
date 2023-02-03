@@ -65,3 +65,7 @@ code {
 
 .importance-button {
 }
+
+.register-button{
+  cursor: pointer;
+}

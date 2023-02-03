@@ -6,6 +6,7 @@ import Note from './Components/Note';
 import Notification from './Components/Notification';
 import noteService from './Services/notes'
 import loginService from './Services/login';
+import RegisterForm from './Components/RegisterForm';
 
 function App() {
 
@@ -148,7 +149,13 @@ function App() {
         <small>Save your notes on the fly</small>
       </div>
         {user === null ?
-          loginForm() : 
+          <LoginForm 
+            username={username}
+            password={password}
+            handleLogin={handleLogin}
+            setUsername={setUsername}
+            setPassword={setPassword}
+            /> : 
           <div>
             <p>{user.name} logged-in</p>
               {noteForm()}
