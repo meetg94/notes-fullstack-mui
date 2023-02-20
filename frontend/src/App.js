@@ -4,6 +4,7 @@ import {Button, Card, Alert} from '@mui/material';
 import LoginForm from './Components/LoginForm';
 import Note from './Components/Note';
 import Notification from './Components/Notification';
+import RenderNotes from './Components/RenderNotes';
 import noteService from './Services/notes'
 import loginService from './Services/login';
 
@@ -17,13 +18,13 @@ function App() {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
-  useEffect(() => {
-    noteService
-      .getAll()
-      .then(initialNotes => {
-        setNotes(initialNotes)
-      })
-  }, [])
+  // useEffect(() => {
+  //   noteService
+  //     .getAll()
+  //     .then(initialNotes => {
+  //       setNotes(initialNotes)
+  //     })
+  // }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser')
@@ -100,30 +101,10 @@ function App() {
     ? notes
     : notes.filter(note => note.important)
 
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-    <div>
-      username
-        <input
-          type='text'
-          value={username}
-          name='Username'
-          onChange={({ target }) => setUsername(target.value)}
-        />
-    </div>
-    <div>
-      password
-        <input
-          type='password'
-          value={password}
-          name='Password'
-          onChange={({ target }) => setPassword(target.value)}
-        />
-    </div>
-    <button type='submit'>Login</button>
-  </form>
-  )
-
+  const handleLogout = async () => {
+    await localStorage.clear();
+    setUser(null)
+  }
   const noteForm = () => (
     <form
         className='save-button-container'
@@ -155,35 +136,34 @@ function App() {
             setUsername={setUsername}
             setPassword={setPassword}
             /> : 
-          <div>
-            <p>{user.name} logged-in</p>
-              {noteForm()}
+            <div>
+            <div>
+              <div className='login-status-logout-container'>
+                <p>{user.name} logged-in</p>
+                <div>
+                  <Button onClick={handleLogout}>Log Out</Button>
+                </div>
+              </div>
+                {noteForm()}
+                <RenderNotes
+                  setNotes={setNotes} 
+                  showAll={showAll} 
+                  notes={notes} 
+                  toggleImportance={toggleImportance}
+                  />
+            </div>
+            <div className='important-button-div'>
+              <Button
+                className='mui-button'
+                style={{ "height": "20px", "background":"green"}} 
+                variant='contained'
+                onClick={() => setShowAll(!showAll)}>Show {showAll ? 'important' : 'all'} Notes
+              </Button>
+            </div>
           </div>
+          
         }
-      
-      <div className='important-button-div'>
-        <Button
-        className='mui-button'
-        style={{ "height": "20px", "background":"green"}} 
-        variant='contained'
-        onClick={() => setShowAll(!showAll)}>Show {showAll ? 'important' : 'all'} Notes
-        </Button>
-      </div>
-
       <div className='list-container'>
-      <small>Showing {showAll ? 'all' : 'important'} notes.</small>
-      <Card>
-      <ul>
-        {notesToShow.map(note =>
-          <Note
-            key={note.id}
-            note={note}
-            showAll={showAll}
-            toggleImportance={() => toggleImportance(note.id)}
-            />
-          )}
-      </ul>
-      </Card>
       <Notification message={errorMessage} />
       </div>
     </div>

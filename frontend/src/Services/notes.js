@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = '/api/notes'
+const baseUrl = '/api/user/notes'
 
 let token = null
 
@@ -8,8 +8,12 @@ const setToken = newToken => {
 }
 
 const getAll = () => {
-    const request = axios.get(baseUrl)
-    return request.then(response => response.data)
+    const config = {
+        headers: { Authorization: token },
+    }
+
+    const request = axios.get(baseUrl, config)
+    return request.then(response => (response.data[0].notes))
 }
 
 const create = async newObject => {

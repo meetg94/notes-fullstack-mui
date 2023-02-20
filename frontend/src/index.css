@@ -69,3 +69,8 @@ code {
 .register-button{
   cursor: pointer;
 }
+
+.login-status-logout-container {
+  display: flex;
+  justify-content: space-between;
+}
