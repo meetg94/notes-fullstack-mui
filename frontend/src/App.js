@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 import {Button, Card, Alert} from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
 
+import RegisterForm from './Components/RegisterForm';
 import LoginForm from './Components/LoginForm';
 import Note from './Components/Note';
 import Notification from './Components/Notification';
@@ -126,7 +128,7 @@ function App() {
     <div>        
       <div className='main-title'>
         <h2>Note Fly</h2>
-        <small>Save your notes on the fly</small>
+        <small>Save your notes on the fly!</small>
       </div>
         {user === null ?
           <LoginForm 
@@ -165,6 +167,11 @@ function App() {
         }
       <div className='list-container'>
       <Notification message={errorMessage} />
+      </div>
+      <div>
+        <Routes>
+          <Route path='/register' element={<RegisterForm />} />
+        </Routes>
       </div>
     </div>
   );

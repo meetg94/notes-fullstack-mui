@@ -1,65 +1,102 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
+
+import { Snackbar } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 import axios from 'axios'
 
 import registerService from '../Services/register'
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
 function RegisterForm() {
 
-    const [ userData, setUserData ] = useState({})
+    const [username, setUsername] = useState('')
+    const [name, setName] = useState('')
+    const [password, setPassword] = useState('')
+    const [successMessage, setSuccessMessage] = useState(false)
 
-    const handleChange = (e) => {
-        const newData = {...userData}
-        newData[e.target.name] = e.target.value
-        setUserData(newData)
+    const [open, setOpen] = useState(true)
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        registerService.register({ userData })
+        registerService.register(({ username, name, password }),
+        {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+        })
         .then((response) => {
-            console.log(response.data)
+            console.log(response.data.message)
         })
         .catch((error) => {
             console.log(error)
         })
+        setUsername('')
+        setName('')
+        setPassword('')
+        setSuccessMessage(`Congrats! ${username} registered`)
+        setTimeout(() => {
+            setSuccessMessage(null)
+        }, 6000)
     }
 
-  return (
+    return (
     <div>
         <h3>Register</h3>
+        {successMessage ?
+            <div>
+                <p>{successMessage}</p>
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert severity="success">Congrats user has been registered!</Alert>
+                </Snackbar>
+            </div>
+            :
         <form onSubmit={handleSubmit}>
+            <div>
+                Username
+                    <input
+                        type="username"
+                        name="username"
+                        value={username}
+                        onChange={({ target }) => setUsername(target.value)}
+                        placeholder='Enter Username'
+                        required
+                    />
+            </div>
             <div>
                 Name
                     <input
                         type="name"
-                        value={userData.name}
-                        onChange={handleChange}
-                        placeholder='Enter Name'
+                        name="name"
+                        value={name}
+                        onChange={({ target }) => setName(target.value)}
+                        placeholder='Enter name'
                         required
                     />
             </div>
             <div>
-                username
-                    <input
-                        value={userData.username}
-                        onChange={handleChange}
-                        placeholder='Enter username'
-                        required
-                    />
-            </div>
-            <div>
-                password
+                Password
                     <input
                         type="password"
-                        value={userData.password}
-                        onChange={handleChange}
+                        name="password"
+                        value={password}
+                        onChange={({ target }) => setPassword(target.value)}
                         placeholder='Enter password'
                         required
                     />
             </div>
                 <button type="submit">Register</button>
         </form>
+}
     </div>
   )
 }
