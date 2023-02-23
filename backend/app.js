@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
+require('dotenv').config();
 
 const notesRouter = require('./controllers/notes.controller')
 const usersRouter = require('./controllers/users')

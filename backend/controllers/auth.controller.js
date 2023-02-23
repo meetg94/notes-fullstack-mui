@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt')
-const { response } = require('express')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
+
+const KEY = `${process.env.SECRET}`
 
 exports.signup = async (req, res) => {
     const { username, name, password } = req.body
@@ -48,7 +49,7 @@ exports.signin = async (req, res) => {
         id: user._id,
     }
 
-    const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: 3600 })
+    const token = jwt.sign(userForToken, KEY, { expiresIn: 3600 })
 
     res
         .status(200)

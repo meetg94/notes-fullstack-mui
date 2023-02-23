@@ -12,4 +12,6 @@ module.exports = function(app) {
     app.get('/api/user/notes', controller.getUserNotes)
 
     app.post('/api/user/notes', controller.postUserNote)
+
+    app.put('/api/user/notes/:id', controller.updateUserNote)
 }
