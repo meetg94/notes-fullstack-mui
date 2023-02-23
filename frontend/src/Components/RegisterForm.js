@@ -4,15 +4,13 @@ import { Snackbar } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { useNavigate } from 'react-router-dom'
 
-import axios from 'axios'
-
 import registerService from '../Services/register'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-function RegisterForm() {
+function RegisterForm({ setRegisterFormShow }) {
 
     const [username, setUsername] = useState('')
     const [name, setName] = useState('')
@@ -39,7 +37,7 @@ function RegisterForm() {
             withCredentials: true,
         })
         .then((response) => {
-            console.log(response.data.message)
+            console.log(response.data)
         })
         .catch((error) => {
             console.log(error)
@@ -50,7 +48,7 @@ function RegisterForm() {
         setSuccessMessage(`Congrats! ${username} registered`)
         setTimeout(() => {
             setSuccessMessage(null)
-            navigate('/login')
+            setRegisterFormShow(false)
         }, 6000)
     }
 
@@ -68,6 +66,7 @@ function RegisterForm() {
             :
         <form onSubmit={handleSubmit}>
             <div>
+                <label>
                 Username
                     <input
                         type="username"
@@ -77,8 +76,10 @@ function RegisterForm() {
                         placeholder='Enter Username'
                         required
                     />
+                </label>
             </div>
             <div>
+                <label>
                 Name
                     <input
                         type="name"
@@ -88,8 +89,10 @@ function RegisterForm() {
                         placeholder='Enter name'
                         required
                     />
+                </label>
             </div>
             <div>
+                <label>
                 Password
                     <input
                         type="password"
@@ -99,6 +102,7 @@ function RegisterForm() {
                         placeholder='Enter password'
                         required
                     />
+                </label>
             </div>
                 <button type="submit">Register</button>
         </form>

@@ -7,6 +7,7 @@ import LoginForm from './Components/LoginForm';
 import Note from './Components/Note';
 import Notification from './Components/Notification';
 import RenderNotes from './Components/RenderNotes';
+import NoteForm from './Components/NoteForm';
 import noteService from './Services/notes'
 import loginService from './Services/login';
 
@@ -97,34 +98,12 @@ function App() {
         }, 6000)
         setNotes(notes.filter(n => n.id !== id))
       })
-      console.log(id)
   }
-
-  const notesToShow = showAll
-    ? notes
-    : notes.filter(note => note.important)
 
   const handleLogout = async () => {
-    await localStorage.clear();
+    localStorage.clear();
     setUser(null)
   }
-  const noteForm = () => (
-    <form
-        className='save-button-container'
-        onSubmit={addNote}>
-        <input
-          value={newNote}
-          placeholder='Enter a note.'
-          onChange={handleNoteChange}
-        />
-        <Button
-          className='mui-button'
-          style={{ "height": "20px", "background": "green"}}
-          variant='contained' 
-          type="submit">Save
-        </Button>
-    </form>
-  )
 
   return (
     <>
@@ -142,14 +121,18 @@ function App() {
             setPassword={setPassword}
             /> : 
             <div>
-            <div>
-              <div className='login-status-logout-container'>
-                <p>{user.name} logged-in</p>
-                <div>
-                  <Button onClick={handleLogout}>Log Out</Button>
+              <div>
+                <div className='login-status-logout-container'>
+                  <p>{user.name} logged-in</p>
+                  <div>
+                    <Button onClick={handleLogout}>Log Out</Button>
+                  </div>
                 </div>
-              </div>
-                {noteForm()}
+                <NoteForm
+                  addNote={addNote}
+                  newNote={newNote}
+                  handleNoteChange={handleNoteChange}
+                />
                 <RenderNotes
                   setNotes={setNotes} 
                   showAll={showAll} 
@@ -166,12 +149,10 @@ function App() {
               </Button>
             </div>
           </div>
-          
         }
       <div className='list-container'>
       <Notification message={errorMessage} />
       </div>
-
     </div>
         </>
   );
