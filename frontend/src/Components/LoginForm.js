@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import login from '../Services/login'
 
 function LoginForm({
     username,
@@ -19,9 +18,9 @@ function LoginForm({
     const navigate = useNavigate()
 
   return (
-    <div>
+    <div className='login-register-container'>
         <h4>Not Registered ? 
-            <div className='register-button' onClick={() => {navigate('/register'); setLoginShow(false)}}>
+            <div className='register-button' onClick={() => {navigate('/register')}}>
                 Register Now!
             </div>
         </h4>

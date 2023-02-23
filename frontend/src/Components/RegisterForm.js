@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { Snackbar } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
+import { useNavigate } from 'react-router-dom'
+
 import axios from 'axios'
 
 import registerService from '../Services/register'
@@ -15,9 +17,11 @@ function RegisterForm() {
     const [username, setUsername] = useState('')
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
-    const [successMessage, setSuccessMessage] = useState(false)
+    const [successMessage, setSuccessMessage] = useState(null)
 
     const [open, setOpen] = useState(true)
+
+    const navigate = useNavigate()
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -46,15 +50,17 @@ function RegisterForm() {
         setSuccessMessage(`Congrats! ${username} registered`)
         setTimeout(() => {
             setSuccessMessage(null)
+            navigate('/login')
         }, 6000)
     }
 
     return (
-    <div>
+    <div className='registeration-form-container'>
         <h3>Register</h3>
         {successMessage ?
             <div>
                 <p>{successMessage}</p>
+                <p>Login</p>
                 <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                     <Alert severity="success">Congrats user has been registered!</Alert>
                 </Snackbar>

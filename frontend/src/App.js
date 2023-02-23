@@ -97,6 +97,7 @@ function App() {
         }, 6000)
         setNotes(notes.filter(n => n.id !== id))
       })
+      console.log(id)
   }
 
   const notesToShow = showAll
@@ -113,6 +114,7 @@ function App() {
         onSubmit={addNote}>
         <input
           value={newNote}
+          placeholder='Enter a note.'
           onChange={handleNoteChange}
         />
         <Button
@@ -125,6 +127,7 @@ function App() {
   )
 
   return (
+    <>
     <div>        
       <div className='main-title'>
         <h2>Note Fly</h2>
@@ -168,12 +171,9 @@ function App() {
       <div className='list-container'>
       <Notification message={errorMessage} />
       </div>
-      <div>
-        <Routes>
-          <Route path='/register' element={<RegisterForm />} />
-        </Routes>
-      </div>
+
     </div>
+        </>
   );
 }
 
