@@ -69,6 +69,11 @@ exports.updateUserNote = async(req, res) => {
     })
 }
 
+exports.deleteUserNote = async(req, res) => {
+  await Note.findByIdAndRemove(req.params.id)
+  res.status(204).end()
+}
+
 // notesRouter.get('/', async (request, response) => {
 //   const notes = await Note
 //     .find({}).populate('user', { username: 1, name: 1 })

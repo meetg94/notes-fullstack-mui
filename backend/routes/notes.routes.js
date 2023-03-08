@@ -14,4 +14,6 @@ module.exports = function(app) {
     app.post('/api/user/notes', controller.postUserNote)
 
     app.put('/api/user/notes/:id', controller.updateUserNote)
+
+    app.delete('/api/user/notes/:id', controller.deleteUserNote)
 }
