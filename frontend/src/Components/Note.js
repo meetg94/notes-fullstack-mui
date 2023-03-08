@@ -1,4 +1,4 @@
-function Note({ showAll, note, toggleImportance }) {
+function Note({ showAll, note, toggleImportance, deleteNote }) {
 
 
   const label = note.important
@@ -12,6 +12,14 @@ function Note({ showAll, note, toggleImportance }) {
       variant="contained"
       onClick={toggleImportance}>
         {label}
+      </button>
+      <button 
+      color="primary"
+      // className={}
+      variant="contained"
+      onClick={() => deleteNote(note.id)}
+      >
+        Delete
       </button>
     </li>
   )

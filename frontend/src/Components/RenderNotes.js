@@ -4,7 +4,7 @@ import { Card } from '@mui/material'
 import Note from './Note'
 import noteService from '../Services/notes'
 
-function RenderNotes({ setNotes, showAll, notes, toggleImportance }) {
+function RenderNotes({ setNotes, showAll, notes, toggleImportance, deleteNote }) {
 
     useEffect(() => {
         noteService
@@ -29,6 +29,7 @@ function RenderNotes({ setNotes, showAll, notes, toggleImportance }) {
             note={note}
             showAll={showAll}
             toggleImportance={() => toggleImportance(note.id)}
+            deleteNote={deleteNote}
             />
           )}
           </Card>

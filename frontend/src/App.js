@@ -100,6 +100,15 @@ function App() {
       })
   }
 
+  const deleteNote = async (id) => {    
+    try {
+      await noteService.deleteNote(id)
+      setNotes(notes.filter(n => n.id !== id))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const handleLogout = async () => {
     localStorage.clear();
     setUser(null)
@@ -138,6 +147,7 @@ function App() {
                   showAll={showAll} 
                   notes={notes} 
                   toggleImportance={toggleImportance}
+                  deleteNote={deleteNote}
                   />
             </div>
             <div className='important-button-div'>
